@@ -27,7 +27,7 @@ model.eval()
 tokenizer = get_tokenizer(model_name)
 
 
-with open('../image_embeddings.pickle', 'rb') as f:
+with open('image_embeddings.pickle', 'rb') as f:
     embeddings_df = pd.read_pickle(f)
 
 def search(query_embedding, k=5):
