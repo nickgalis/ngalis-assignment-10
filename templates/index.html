@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Interface</title>
+</head>
+<body>
+    <h1>Image and Text Search Interface</h1>
+    <form action="/static" method="post" enctype="multipart/form-data">
+        <label for="query_type">Query Type: </label>
+        <select name="query_type" id="query_type">
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="hybrid">Hybrid</option>
+        </select><br><br>
+
+        <label for="text_query">Text Query: </label>
+        <input type="text" id="text_query" name="text_query"><br><br>
+
+        <label for="image_query">Upload Image: </label>
+        <input type="file" id="image_query" name="image_query"><br><br>
+
+        <label for="weight">Hybrid Weight (between 0 and 1): </label>
+        <input type="text" id="weight" name="weight" value="0.5"><br><br>
+
+        <input type="submit" value="Search">
+    </form>
+
+    {% if results %}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for file_name, score in results %}
+                <li>
+                    <img src="{{ url_for('static', filename=image_folder + '/' + file_name) }}" alt="Image" width="100">
+                    <p>File Name: {{ file_name }} | Similarity Score: {{ '%.4f'|format(score) }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
